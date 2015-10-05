@@ -69,15 +69,17 @@ public class Path extends Task<ClientContext>  {
         pathBToZ = ctx.movement.newTilePath(path).reverse();
         pathZToB = ctx.movement.newTilePath(path);
 
-        if((ctx.backpack.select().count() == 28) || ctx.backpack.id(law_rune_id).select().count() < 1 && grabbing_area.contains(ctx.players.local())
-                || ((ctx.backpack.select().count() == 28) || ctx.backpack.id(law_rune_id).select().count() < 1 && !grabbing_area.contains(ctx.players.local()))) {
+        if((ctx.backpack.select().count() == 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && grabbing_area.contains(ctx.players.local())
+                || ((ctx.backpack.select().count() == 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && !grabbing_area.contains(ctx.players.local()))) {
             pathZToB.randomize(2,2).traverse();
             System.out.println("Trying to get to Bank");
         }
-        if((ctx.backpack.select().count() < 28 && ctx.backpack.id(law_rune_id).select().count() > 0 && banking_area.contains(ctx.players.local()))
-                || ((ctx.backpack.select().count() < 28) && (ctx.backpack.id(law_rune_id).select().count() > 0) && !banking_area.contains(ctx.players.local()))){
+        if((ctx.backpack.select().count() < 28 && !(ctx.backpack.select().id(law_rune_id).isEmpty()) && banking_area.contains(ctx.players.local()))
+                || ((ctx.backpack.select().count() < 28) && !(ctx.backpack.select().id(law_rune_id).isEmpty()) && !banking_area.contains(ctx.players.local()))){
             pathBToZ.randomize(2,2).traverse();
             System.out.println("Trying to get to Wine");
+            final Tile[] path2 = {new Tile(3012, 3355, 0)};
+            ctx.movement.newTilePath(path2).traverse();
         }
 
     }

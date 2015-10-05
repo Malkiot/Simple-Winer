@@ -28,12 +28,6 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
     private final Tile tile4 = new Tile(3014, 3357, 0);
     private final Area banking_area = new Area(tile3, tile4);
 
-    //State Status Flags
-    private boolean is_full;
-    private boolean has_law_runes;
-    private boolean within_banking_area;
-    private boolean within_grabbing_area;
-
     //Create Variables
     public int telekinetic_id = 518; //Telekinetic Grab ID
     public int target_item_id = 245; //Zammy Wine ID
@@ -61,17 +55,10 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
     //Detect Location, LvL, Inventory. Launch GUI
     @Override
     public void start() {
+
         startTime = System.currentTimeMillis();
 
         System.out.println("Script Started!");
-
-        //Check if Telekinetic Grab in ActionBar and find slot
-        /*if (ctx.combatBar.select().id(telekinetic_id).peek().type() == Action.Type.ABILITY) {
-            telekinetic_slot = ctx.combatBar.select().id(telekinetic_id);
-        } else {
-            System.out.println("Telekinetic Grab not found. Exiting.");
-            stop();
-        }*/
 
         //Create Task List
         taskList.addAll(Arrays.asList(
@@ -123,6 +110,7 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
         g.drawString("Grabbed: " + winecount + " (" + winecounthourly + ")", 8, 60);
         g.drawString("Profit: " + profit + " (" + profithourly + ")", 8, 40);
         g.drawRect(5, 5, 115, 60);
+
     }
 
     @Override

@@ -34,28 +34,48 @@ public class TeleGrab extends Task<ClientContext> {
     @Override
     public void run() {
         System.out.println("Grabbing");
-        GroundItem target_item = ctx.groundItems.select().id(target_item_id).nearest().poll();
-        if (target_item.inViewport()) {
-            //Placeholder until better method is found
 
-            //ctx.combatBar.actionAt(telekinetic_slot);
-            //if(ctx.players.local().animation() == -1) {
-                ctx.combatBar.actionAt(0).select(true);
-                target_item.click("Cast", "Wine of Zamorak");
-            //}
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(ctx.players.local().animation() == -1) {
-                ctx.combatBar.actionAt(0).select(true);
-                target_item.interact("Cast","Wine of Zamorak");
-            }
+        //If Wine is there (to avoid incorrect loop)
+        if (!ctx.groundItems.select().id(target_item_id).isEmpty()) {
 
-        } else {
-            ctx.movement.step(target_item);
-            ctx.camera.turnTo(target_item);
+            //Keep Trying while Wine is there
+            while(!ctx.groundItems.select().id(target_item_id).isEmpty()) {
+
+                GroundItem target_item = ctx.groundItems.select().id(target_item_id).nearest().poll();
+
+                if (target_item.inViewport()) {
+
+                    //Placeholder until better method is found
+                    if (ctx.players.local().animation() == -1) {
+
+                        //ctx.combatBar.actionAt(telekinetic_slot);
+                        //if(ctx.players.local().animation() == -1) {
+
+                        ctx.combatBar.actionAt(0).select(true);
+                        target_item.click("Cast", "Wine of Zamorak");
+                        //}
+
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (ctx.players.local().animation() == -1) {
+
+                            ctx.combatBar.actionAt(0).select(true);
+                            target_item.interact("Cast", "Wine of Zamorak");
+
+                        }
+                    }
+
+                } else {
+
+                    ctx.movement.step(target_item);
+                    ctx.camera.turnTo(target_item);
+
+                }
+            }
         }
 
     }
