@@ -33,7 +33,11 @@ public class TeleGrab extends Task<ClientContext> {
     //Try to cast
     @Override
     public void run() {
+
         System.out.println("Grabbing");
+
+        ctx.camera.angle(149);
+        ctx.camera.pitch(84);
 
         //If Wine is there (to avoid incorrect loop)
         if (!ctx.groundItems.select().id(target_item_id).isEmpty()) {
@@ -73,6 +77,8 @@ public class TeleGrab extends Task<ClientContext> {
 
                     ctx.movement.step(target_item);
                     ctx.camera.turnTo(target_item);
+                    ctx.camera.angle(149);
+                    ctx.camera.pitch(84);
 
                 }
             }
