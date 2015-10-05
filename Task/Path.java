@@ -19,6 +19,8 @@ public class Path extends Task<ClientContext>  {
 
     public int law_rune_id = 563;
 
+    boolean tp_bank_yes;
+
     public Path(ClientContext ctx) {
         super(ctx);
     }
@@ -70,16 +72,39 @@ public class Path extends Task<ClientContext>  {
         pathZToB = ctx.movement.newTilePath(path);
 
         if((ctx.backpack.select().count() == 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && grabbing_area.contains(ctx.players.local())
-                || ((ctx.backpack.select().count() == 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && !grabbing_area.contains(ctx.players.local()))) {
-            pathZToB.randomize(2,2).traverse();
+                || (!(ctx.backpack.select().count() < 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && !grabbing_area.contains(ctx.players.local()))) {
+
             System.out.println("Trying to get to Bank");
+            
+            if(Lodestone.FALADOR.canUse(ctx) && tp_bank_yes){
+
+                Lodestone.FALADOR.teleport(ctx);
+                tp_bank_yes = false;
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            if ((ctx.players.local().animation() == -1)) {
+
+                pathZToB.randomize(2, 2).traverse();
+
+            }
         }
+
         if((ctx.backpack.select().count() < 28 && !(ctx.backpack.select().id(law_rune_id).isEmpty()) && banking_area.contains(ctx.players.local()))
                 || ((ctx.backpack.select().count() < 28) && !(ctx.backpack.select().id(law_rune_id).isEmpty()) && !banking_area.contains(ctx.players.local()))){
+
             pathBToZ.randomize(2,2).traverse();
             System.out.println("Trying to get to Wine");
             final Tile[] path2 = {new Tile(3012, 3355, 0)};
             ctx.movement.newTilePath(path2).traverse();
+            tp_bank_yes = true;
+
         }
 
     }
