@@ -75,7 +75,7 @@ public class Path extends Task<ClientContext>  {
                 || (!(ctx.backpack.select().count() < 28) || ctx.backpack.select().id(law_rune_id).isEmpty() && !grabbing_area.contains(ctx.players.local()))) {
 
             System.out.println("Trying to get to Bank");
-            
+
             if(Lodestone.FALADOR.canUse(ctx) && tp_bank_yes){
 
                 Lodestone.FALADOR.teleport(ctx);

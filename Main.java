@@ -1,6 +1,10 @@
-/**
- * Created by Malk on 01.10.2015.
- */
+/****************************************************************
+ * Thanks to Chris, Artificial, and Mookyman for their advice.  *
+ *                                                              *
+ * Additional thanks to Artificial for his Lodestone API.       *
+ *                                                              *
+ *                                                              *
+ ***************************************************************/
 
 import org.powerbot.script.*;
 import org.powerbot.script.rt6.*;
@@ -29,11 +33,7 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
     private final Area banking_area = new Area(tile3, tile4);
 
     //Create Variables
-    public int telekinetic_id = 518; //Telekinetic Grab ID
     public int target_item_id = 245; //Zammy Wine ID
-    public int law_rune_id = 563; //place holder Law Rune ID
-    public int no_law_runes = 54; //No of runes to withdraw
-    IdQuery<Action> telekinetic_slot; //Ability Slot Number
 
     int hours;
     int minutes;
@@ -50,7 +50,6 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
     int profit;
     int profithourly;
     int winecounthourly;
-    String Time;
 
     //Detect Location, LvL, Inventory. Launch GUI
     @Override

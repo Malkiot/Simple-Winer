@@ -59,17 +59,17 @@ public class TeleGrab extends Task<ClientContext> {
                         target_item.click("Cast", "Wine of Zamorak");
                         //}
 
-                        try {
-                            Thread.sleep(250);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
                         if (ctx.players.local().animation() == -1) {
 
                             ctx.combatBar.actionAt(0).select(true);
                             target_item.interact("Cast", "Wine of Zamorak");
 
+                        }
+
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
 
