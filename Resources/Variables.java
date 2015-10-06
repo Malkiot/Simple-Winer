@@ -4,9 +4,6 @@ import org.powerbot.script.Area;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.TilePath;
 
-/**
- * Created by Leo on 06.10.2015.
- */
 public class Variables {
 
     //IDs
@@ -15,8 +12,8 @@ public class Variables {
     public static int law_rune_number = 54; //number of runes to withdraw
 
     //Define Telekinetic Area
-    private static Tile tile1 = new Tile(2951, 3473, 0);
-    private static Tile tile2 = new Tile(2952, 3474, 0);
+    private static Tile tile1 = new Tile(2954, 3472, 0);
+    private static Tile tile2 = new Tile(2950, 3477, 0);
     public static Area grabbing_area = new Area(tile1, tile2);
 
     //Define Banking Area
@@ -48,5 +45,9 @@ public class Variables {
     };
 
     public static Tile[] path2 = {new Tile(3012, 3355, 0)};
+
+    public static int[] winebounds = {-64, 64, -484, -308, -64, 64} ;
+
+    public static int telekinesis_id = 518;
 
 }

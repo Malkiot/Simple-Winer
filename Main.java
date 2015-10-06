@@ -45,6 +45,8 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
     @Override
     public void poll() {
 
+        System.out.println("I am at grabbing Area" + Variables.grabbing_area.contains(ctx.players.local()));
+
         wine1 = ctx.backpack.id(Resources.Variables.z_wine_id).select().count();
 
         for (Task.Task task : taskList) {
