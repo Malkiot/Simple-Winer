@@ -1,19 +1,10 @@
 package Task;
 
-import org.powerbot.script.Area;
-import org.powerbot.script.Tile;
+import Resources.Variables;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Interactive;
 
 public class Banking extends Task<ClientContext>  {
-
-    //Define Banking Area
-    private final Tile tile3 = new Tile(3010, 3353, 0);
-    private final Tile tile4 = new Tile(3014, 3357, 0);
-    private final Area banking_area = new Area(tile3, tile4);
-
-    public int law_rune_id = 563;
-    public int no_law_runes = 54;
 
     public Banking(ClientContext ctx) {
         super(ctx);
@@ -21,17 +12,14 @@ public class Banking extends Task<ClientContext>  {
 
     @Override
     public boolean condition() {
-        final Tile tile1 = new Tile(3010, 3353, 0);
-        final Tile tile2 = new Tile(3014, 3357, 0);
-        final Area area = new Area(tile1, tile2);
 
         return (!(ctx.backpack.select().count() < 28)
-                || (ctx.backpack.select().id(law_rune_id).isEmpty())
-                && banking_area.contains(ctx.players.local()));
+                || (ctx.backpack.select().id(Variables.law_rune_id).isEmpty())
+                && Variables.banking_area.contains(ctx.players.local()));
 
     }
 
-    //Try to cast
+    //Try to Bank
     @Override
     public void run() {
 
@@ -54,7 +42,7 @@ public class Banking extends Task<ClientContext>  {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            ctx.bank.withdraw(law_rune_id, no_law_runes);
+            ctx.bank.withdraw(Variables.law_rune_id, Variables.law_rune_number);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

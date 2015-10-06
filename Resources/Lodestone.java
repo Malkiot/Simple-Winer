@@ -1,4 +1,4 @@
-package Task;
+package Resources;
 
 import java.awt.*;
 import java.util.concurrent.Callable;

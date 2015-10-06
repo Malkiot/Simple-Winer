@@ -1,15 +1,15 @@
 /****************************************************************
  * Thanks to Chris, Artificial, and Mookyman for their advice.  *
  *                                                              *
- * Additional thanks to Artificial for his Lodestone API.       *
+ * Additional thanks to Artificial for his Lodestone API        *
  *                                                              *
- *                                                              *
+ *TODO: Antipattern and include LawRunes in Profit Calc         *
  ***************************************************************/
 
+import Resources.Variables;
 import org.powerbot.script.*;
 import org.powerbot.script.rt6.*;
 import org.powerbot.script.rt6.ClientContext;
-import org.powerbot.script.rt6.IdQuery;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,35 +21,6 @@ import java.util.List;
 public class Main extends PollingScript<ClientContext> implements PaintListener {
 
     private List<Task.Task> taskList = new ArrayList<Task.Task>();
-
-    //Define Telekinetic Area
-    private final Tile tile1 = new Tile(2951, 3473, 0);
-    private final Tile tile2 = new Tile(2952, 3474, 0);
-    private final Area grabbing_area = new Area(tile1, tile2);
-
-    //Define Banking Area
-    private final Tile tile3 = new Tile(3010, 3353, 0);
-    private final Tile tile4 = new Tile(3014, 3357, 0);
-    private final Area banking_area = new Area(tile3, tile4);
-
-    //Create Variables
-    public int target_item_id = 245; //Zammy Wine ID
-
-    int hours;
-    int minutes;
-    int seconds;
-
-    long startTime;
-    long endTime;
-    long totalTime;
-
-    int wine1;
-    int wine2;
-    int winecount;
-    int wineprice;
-    int profit;
-    int profithourly;
-    int winecounthourly;
 
     //Detect Location, LvL, Inventory. Launch GUI
     @Override
@@ -66,14 +37,15 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
                 new Task.Banking(ctx))
         );
 
-        wineprice = GeItem.price(target_item_id);
+        wineprice = GeItem.price(Resources.Variables.z_wine_id);
+        lawruneprice = GeItem.price(Variables.law_rune_id);
 
     }
 
     @Override
     public void poll() {
 
-        wine1 = ctx.backpack.id(target_item_id).select().count();
+        wine1 = ctx.backpack.id(Resources.Variables.z_wine_id).select().count();
 
         for (Task.Task task : taskList) {
             if (task.condition()) {
@@ -81,7 +53,7 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
             }
         }
 
-        wine2 = ctx.backpack.id(target_item_id).select().count();
+        wine2 = ctx.backpack.id(Resources.Variables.z_wine_id).select().count();
 
         if(wine2 > wine1){
             winecount = winecount + (wine2 - wine1);
@@ -89,11 +61,30 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
 
     }
 
+
+    //Paint Variables
+    int hours;
+    int minutes;
+    int seconds;
+
+    long startTime;
+    long endTime;
+    long totalTime;
+
+    int wine1;
+    int wine2;
+    int winecount;
+    int wineprice;
+    int lawruneprice;
+    int profit;
+    int profithourly;
+    int winecounthourly;
+
     public void repaint(Graphics g) {
 
         //Timer
         endTime   = System.currentTimeMillis();
-        totalTime = ((endTime - startTime + 1)/1000);
+        totalTime = ((endTime - startTime)/1000);
         hours = (int) Math.floor(totalTime / 3600);
         minutes = (int) Math.floor((totalTime - hours*3600)/60);
         seconds = (int) Math.floor((totalTime - minutes*60));
@@ -101,6 +92,7 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
         profit = winecount*wineprice;
         profithourly = (int) Math.floor(profit/totalTime*3600);
         winecounthourly = (int) Math.round(winecount*3600/totalTime);
+
         g.setColor(new Color(0, 0, 0, 146));
         g.fillRect(5, 5, 115, 60);
         g.setColor(Color.GREEN);
