@@ -78,11 +78,13 @@ public class TeleGrab extends Task<ClientContext> {
                             if(!ctx.client().isSpellSelected()) {
                                 ctx.combatBar.actionAt(0).select(true);
                             }
-                            target_item.interact(true, "Cast", "Wine of Zamorak");
-                            try {
-                                Thread.sleep(10);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            if (ctx.players.local().animation() == -1) {
+                                target_item.interact(true, "Cast", "Wine of Zamorak");
+                                try {
+                                    Thread.sleep(10);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             grab = true;

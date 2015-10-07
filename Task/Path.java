@@ -46,7 +46,7 @@ public class Path extends Task<ClientContext>  {
             }
 
             //Do not walk if attempting teleport
-            if ((ctx.players.local().animation() == -1)) {
+            if ((ctx.players.local().animation() == -1) && !Variables.grabbing_area.contains(ctx.players.local())) {
 
                 pathZToB.randomize(2, 2).traverse();
 
